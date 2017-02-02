@@ -1,0 +1,14 @@
+# Runtime data
+pids
+*.pid
+*.seed
+
+#dependencies
+node_modules/
+
+#ide
+.idea/
+*.DS_Store
+
+#config
+.env
