@@ -6,6 +6,6 @@ const // packages
 
 /* GET home page. */
 router.route('/login')
-    .get(userController.submitLogin);
+    .post(userController.submitLogin);
 
 module.exports = router;
