@@ -17,9 +17,9 @@
   "author": "mike-stumpf",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mike-stumpf/ITB-Thesis.Web/issues"
+    "url": "https://github.com/mike-stumpf/ITB-Thesis.API/issues"
   },
-  "homepage": "https://github.com/mike-stumpf/ITB-Thesis.Web#readme",
+  "homepage": "https://github.com/mike-stumpf/ITB-Thesis.API#readme",
   "engines": {
     "node": "6.3.1"
   },
