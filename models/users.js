@@ -15,11 +15,19 @@ function getUserObject(result){
         email: result.email,
         dateCreated: result.date_created,
         lastLogin: result.last_login,
-        salt: result.salt,
+        passwordSalt: result.password_salt,
         hashedPassword: result.hashed_password,
-        token: result.token
+        resetToken: result.reset_token
     }
 }
+
+usersModel.reduceUserObject = function(user){
+    delete user['id'];
+    delete user['passwordSalt'];
+    delete user['hashedPassword'];
+    delete user['resetToken'];
+    return user;
+};
 
 usersModel.findByEmail = function(email, fullObject){
     if (!email || email.length < 1) {
@@ -38,10 +46,7 @@ usersModel.findByEmail = function(email, fullObject){
                 if (result) {
                     var user = getUserObject(result);
                     if (!fullObject) {
-                        delete user['id'];
-                        delete user['salt'];
-                        delete user['hashedPassword'];
-                        delete user['token'];
+                        usersModel.reduceUserObject(user);
                     }
                     return user;
                 } else {

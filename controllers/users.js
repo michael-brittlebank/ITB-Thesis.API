@@ -17,7 +17,10 @@ function createToken(user) {
 }
 
 user.submitLogin = function(req, res, next) {
-    res.status(utilService.status.ok).json({token:createToken(req.user)});
+    var user = req.user;
+    usersModel.reduceUserObject(user);
+    user.sessionToken = createToken(req.user);
+    res.status(utilService.status.ok).json(user);
 };
 
 user.getCurrentUser = function(req,res,next){

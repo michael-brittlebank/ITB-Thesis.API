@@ -25,11 +25,11 @@ passport.use(new localStrategy({
         } else {
             usersModel.findByEmail(email, true)
                 .then(function(user){
-                    if (!user || !utilService.nullCheck(user,'salt') || !utilService.nullCheck(user,'hashedPassword')){
+                    if (!user || !utilService.nullCheck(user,'passwordSalt') || !utilService.nullCheck(user,'hashedPassword')){
                         logService.error('authenticationController.local() Invalid credentials');
                         return done(null, false, { message: 'passport.local() Invalid credentials' });
                     } else {
-                        if (authenticationService.authenticate(user.salt, password, user.hashedPassword)){
+                        if (authenticationService.authenticate(user.passwordSalt, password, user.hashedPassword)){
                             return done(null, user);
                         } else {
                             logService.error('authenticationController.local() Login failed');
@@ -53,13 +53,14 @@ passport.use(new bearerStrategy(
                     logService.error(error);
                     return done(null, false);
                 } else {
-                    usersModel.findByEmail(session.email).then(function(user) {
-                        if (!user) {
-                            return done(null, false);
-                        } else {
-                            return done(null, user);
-                        }
-                    });
+                    usersModel.findByEmail(session.email, true)
+                        .then(function(user) {
+                            if (!user) {
+                                return done(null, false);
+                            } else {
+                                return done(null, user);
+                            }
+                        });
                 }
             });
         } catch (err) {
