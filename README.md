@@ -44,6 +44,13 @@ npm run dev
 The site is served at [http://localhost:3001](http://localhost:3001)
 
 
+## How to export changes to the database structure ##
+Install [this tool](https://github.com/luissquall/dbdump) and then run: 
+```
+dbdump -u userName -p -d tableName > normalized-thesis-struct.sql
+```
+
+
 ## How to run the project for production ##
 
 [Upstart](http://upstart.ubuntu.com/) is used to daemonize the webapp and keep it alive.  Foreman exports the config values to the appropriate files for use by Upstart.
