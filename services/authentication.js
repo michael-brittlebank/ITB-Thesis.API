@@ -7,7 +7,7 @@ authenticationService.authenticate = function(passwordSalt, plainTextPassword, h
     return authenticationService.encryptPassword(passwordSalt, plainTextPassword) === hashedPassword;
 };
 
-authenticationService.createPasswordSalt = function() {
+authenticationService.createSalt = function() {
     return crypto.randomBytes(16).toString('base64');
 };
 
@@ -23,7 +23,7 @@ authenticationService.encryptPassword = function(passwordSalt, password) {
 };
 
 authenticationService.createToken = function() {
-    return crypto.createHash('sha256').update(this.createPasswordSalt()).digest('hex');
+    return crypto.createHash('sha256').update(this.createSalt()).digest('hex');
 };
 
 module.exports = authenticationService;
