@@ -13,9 +13,9 @@ authenticationService.createPasswordSalt = function() {
 
 authenticationService.encryptPassword = function(passwordSalt, password) {
     if (!password){
-        throw new Error('authenticationService.encryptPassword() No password specified!');
+        throw new Error('authenticationService.encryptPassword() No password specified');
     } else if (!passwordSalt){
-        throw new Error('authenticationService.encryptPassword() No password salt specified!');
+        throw new Error('authenticationService.encryptPassword() No password salt specified');
     } else {
         const passwordSaltBuffer = new Buffer(passwordSalt, 'base64');
         return crypto.pbkdf2Sync(password, passwordSaltBuffer, 10000, 64, 'SHA1').toString('base64');

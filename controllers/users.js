@@ -3,6 +3,7 @@ const //packages
 //services
     utilService = require('../services/util'),
     mysqlService = require('../services/mysql'),
+    emailService = require('../services/email'),
 //models
     usersModel = require('../models/users');
 
@@ -20,7 +21,14 @@ user.submitLogin = function(req, res, next) {
     var user = req.user;
     usersModel.reduceUserObject(user);
     user.sessionToken = createToken(req.user);
-    res.status(utilService.status.ok).json(user);
+    emailService.sendMail({
+        to: req.user.email,
+        subject: 'Hello',
+        text: 'Testing some Mailgun awesomness!'
+    })
+        .then(function(){
+            res.status(utilService.status.ok).json(user);
+        });
 };
 
 user.getCurrentUser = function(req,res,next){
