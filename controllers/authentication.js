@@ -23,7 +23,7 @@ passport.use(new localStrategy({
             logService.error('authenticationController.local()');
             return done(errors);
         } else {
-            usersModel.findByEmail(email, true)
+            usersModel.findByEmail(email)
                 .then(function(user){
                     if (!user || !utilService.nullCheck(user,'passwordSalt') || !utilService.nullCheck(user,'hashedPassword')){
                         logService.error('authenticationController.local() Invalid credentials');
@@ -53,7 +53,7 @@ passport.use(new bearerStrategy(
                     logService.error(error);
                     return done(null, false);
                 } else {
-                    usersModel.findByEmail(session.email, true)
+                    usersModel.findByEmail(session.email)
                         .then(function(user) {
                             if (!user) {
                                 return done(null, false);

@@ -24,4 +24,13 @@ InternalServerError.prototype = Object.create(Error.prototype);
 InternalServerError.prototype.constructor = InternalServerError;
 errors.InternalServerError = InternalServerError;
 
+var UnauthorizedError = function(message) {
+    this.name = 'UnauthorizedError';
+    this.message = message || 'Unauthorized Error';
+    this.status = utilService.status.unauthorized;
+};
+UnauthorizedError.prototype = Object.create(Error.prototype);
+UnauthorizedError.prototype.constructor = UnauthorizedError;
+errors.UnauthorizedError = UnauthorizedError;
+
 module.exports = errors;
