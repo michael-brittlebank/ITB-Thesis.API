@@ -9,6 +9,8 @@ const //packages
     contentLength = require('express-content-length-validator'),
     redirect = require('express-redirect'),
     moment = require('moment'),
+    passport = require('passport'),
+    cookieParser = require('cookie-parser'),
 //services
     logService = require('./services/logs'),
     errorService = require('./services/errors'),
@@ -53,10 +55,13 @@ app.use(utilMiddleware.debugRequests);
 //parse form data
 app.use(bodyParser.json());// to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({
-// to support URL-encoded bodies
-    extended: true
+    extended: true // to support URL-encoded bodies
 }));
 app.use(expressValidator());
+
+//user sessions
+app.use(cookieParser());
+app.use(passport.initialize());
 
 /**
  * routes

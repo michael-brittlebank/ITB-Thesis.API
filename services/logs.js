@@ -10,19 +10,6 @@ const logService = new winston.Logger({
             timestamp: function() {
                 return (moment().format('DD MMM HH:mm:ss'));
             },
-            name: 'console-error',
-            level: 'error',
-            handleExceptions: true,
-            humanReadableUnhandledException: true,
-            json: false,
-            colorize: true
-        }),
-        new winston.transports.Console({
-            timestamp: function() {
-                return (moment().format('DD MMM HH:mm:ss'));
-            },
-            name: 'console-info',
-            level: 'info',
             handleExceptions: true,
             humanReadableUnhandledException: true,
             json: false,

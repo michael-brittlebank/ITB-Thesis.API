@@ -19,16 +19,16 @@ util.status = {
  * Helper Functions ----------------------------------------------------------
  */
 
-util.simpleNullCheck = function(object,key){
+util.nullCheck = function(object,key){
     return object && object.hasOwnProperty(key) && (object[key] || object[key] === 0)?true:false;
 };
 
 util.getValueByKey = function(object, key){
-    return util.simpleNullCheck(object,key)?object[key]:'';
+    return util.nullCheck(object,key)?object[key]:'';
 };
 
 util.getFirstValueByKey = function(object, key){
-    return util.simpleNullCheck(object,key)?object[key][0]:'';
+    return util.nullCheck(object,key)?object[key][0]:'';
 };
 
 util.isLocalConfig = function(){
