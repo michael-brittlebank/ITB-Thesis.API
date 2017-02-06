@@ -18,7 +18,7 @@ function getUserObject(result){
         passwordSalt: result.password_salt,
         hashedPassword: result.hashed_password,
         resetToken: result.reset_token
-    }
+    };
 }
 
 function findUser(whereParameters){
@@ -39,10 +39,10 @@ function findUser(whereParameters){
 }
 
 usersModel.reduceUserObject = function(user){
-    delete user['id'];
-    delete user['passwordSalt'];
-    delete user['hashedPassword'];
-    delete user['resetToken'];
+    delete user.id;
+    delete user.passwordSalt;
+    delete user.hashedPassword;
+    delete user.resetToken;
     return user;
 };
 

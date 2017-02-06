@@ -7,11 +7,12 @@
     "start": "foreman start -f Procfile",
     "stop": "foreman stop -f Procfile",
     "dev": "foreman start -f Procfile_dev",
-    "export": "sudo nf export -o /etc/init"
+    "export": "sudo nf export -o /etc/init",
+    "lint": "jshint --exclude node_modules ."
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/mike-stumpf/ITB-Thesis.API"
   },
   "keywords": [],
   "author": "mike-stumpf",
@@ -36,6 +37,7 @@
     "express-validator": "2.21.0",
     "foreman": "2.0.0",
     "helmet": "3.1.0",
+    "jshint": "2.9.4",
     "jsonwebtoken": "7.2.1",
     "knex": "0.12.6",
     "lodash": "4.17.2",

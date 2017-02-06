@@ -21,7 +21,7 @@ emailService.sendMail = function(data) {
                 return promise.reject(error);
             });
     } else {
-        throw new Error('emailService.sendMail() Missing mail parameters')
+        throw new Error('emailService.sendMail() Missing mail parameters');
     }
 };
 
