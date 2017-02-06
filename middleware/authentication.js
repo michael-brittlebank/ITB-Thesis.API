@@ -1,3 +1,9 @@
-//todo, is logged in
+const authenticationController = require('../controllers/authentication');
 
-//todo, is admin
+var authenticationMiddleware = {};
+
+authenticationMiddleware.authenticateBearer = authenticationController.authenticate('bearer', {session:false});
+
+authenticationMiddleware.authenticateLogin = authenticationController.authenticate('local',{failureFlag:true,session: false});
+
+module.exports = authenticationMiddleware;

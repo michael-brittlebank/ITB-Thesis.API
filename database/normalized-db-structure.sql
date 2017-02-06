@@ -53,7 +53,7 @@ CREATE TABLE `users` (
   `salt` varchar(255) NOT NULL,
   `hashed_password` varchar(255) NOT NULL,
   `token` varchar(255) DEFAULT NULL,
-  `role` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

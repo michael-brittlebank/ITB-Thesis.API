@@ -16,7 +16,7 @@ const //packages
     errorService = require('./services/errors'),
     utilService = require('./services/util'),
 // routes
-    userRoutes = require('./routes/user'),
+    usersRoutes = require('./routes/users'),
 //middleware
     utilMiddleware = require('./middleware/util'),
 //variables
@@ -66,7 +66,7 @@ app.use(passport.initialize());
 /**
  * routes
  */
-app.use('/user', userRoutes);
+app.use('/users', usersRoutes);
 
 /**
  * error handlers
