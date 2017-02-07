@@ -17,6 +17,7 @@ const //packages
     utilService = require('./services/util'),
 // routes
     usersRoutes = require('./routes/users'),
+    webhooksRoutes = require('./routes/webhooks'),
 //middleware
     utilMiddleware = require('./middleware/util'),
 //variables
@@ -67,6 +68,8 @@ app.use(passport.initialize());
  * routes
  */
 app.use('/users', usersRoutes);
+app.use('/webhooks', webhooksRoutes);
+
 
 /**
  * error handlers

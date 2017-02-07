@@ -5,7 +5,6 @@ const // packages
 //controllers
     usersController = require('../controllers/users');
 
-/* GET home page. */
 router.route('/login')
     .post(authenticationMiddleware.authenticateLogin,
         usersController.submitLogin);
