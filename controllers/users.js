@@ -22,10 +22,7 @@ function createToken(user) {
 }
 
 usersController.submitLogin = function(req, res, next) {
-    var user = req.user;
-    usersModel.reduceUserObject(user);
-    user.sessionToken = createToken(req.user);
-    res.status(utilService.status.ok).json(user);
+    res.status(utilService.status.ok).json({sessionToken: createToken(req.user)});
 };
 
 usersController.getCurrentUser = function(req,res,next){
