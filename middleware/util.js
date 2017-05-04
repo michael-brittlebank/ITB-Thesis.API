@@ -4,7 +4,7 @@ const //packages
     logService = require('../services/logs'),
     utilService = require('../services/util');
 
-var utilMiddleware = {};
+let utilMiddleware = {};
 
 utilMiddleware.removeTrailingSlashes = function(req, res, next) {
     if(req.url.slice(req.url.length-1, req.url.length) === '/' && req.url.length > 1) {

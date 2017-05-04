@@ -3,15 +3,13 @@ const //packages
     promise = require('bluebird'),
 //services
     utilService = require('../services/util'),
-    mysqlService = require('../services/mysql'),
     emailService = require('../services/email'),
-    logService = require('../services/logs'),
     authenticationService = require('../services/authentication'),
     errorService = require('../services/errors'),
 //models
     usersModel = require('../models/users');
 
-var usersController = {};
+let usersController = {};
 
 function createToken(user) {
     const payloadObject = {

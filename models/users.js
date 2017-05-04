@@ -4,7 +4,7 @@ const //packages
     mysqlService = require('../services/mysql'),
     authenticationService = require('../services/authentication');
 
-var usersModel = {};
+let usersModel = {};
 
 function getUserObject(result){
     return {

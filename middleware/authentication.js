@@ -5,7 +5,7 @@ const //packages
     //controllers
     authenticationController = require('../controllers/authentication');
 
-var authenticationMiddleware = {};
+let authenticationMiddleware = {};
 
 authenticationMiddleware.authenticateBearer = authenticationController.authenticate('bearer', {session:false});
 

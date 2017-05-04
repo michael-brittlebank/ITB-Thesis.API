@@ -23,7 +23,7 @@ const //packages
 //variables
     port = process.env.NODE_PORT || 3001;
 
-var app = express();
+let app = express();
 
 /**
  * settings

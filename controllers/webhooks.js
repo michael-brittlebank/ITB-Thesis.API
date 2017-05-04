@@ -1,7 +1,7 @@
 const //services
     utilService = require('../services/util');
 
-var webhooksController = {};
+let webhooksController = {};
 
 webhooksController.mailgunCatchAll = function(req, res, next) {
     //todo, on unsubscribe change user's setting in database

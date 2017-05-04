@@ -1,7 +1,7 @@
 const //packages
     crypto = require('crypto');
 
-var authenticationService = {};
+let authenticationService = {};
 
 authenticationService.authenticate = function(passwordSalt, plainTextPassword, hashedPassword) {
     return authenticationService.encryptPassword(passwordSalt, plainTextPassword) === hashedPassword;

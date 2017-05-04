@@ -5,7 +5,7 @@ const //packages
     logService = require('./logs'),
     utilService = require('./util');
 
-var emailService = {};
+let emailService = {};
 
 emailService.sendMail = function(data) {
     if (!utilService.nullCheck(data, 'from')){
