@@ -5,10 +5,10 @@ const //packages
     jwt = require('jsonwebtoken'),
 //services
     utilService = require('../services/util'),
-    logService = require('../services/logs'),
+    logService = require('../services/log'),
     authenticationService = require('../services/authentication'),
 //models
-    usersModel = require('../models/users');
+    userModel = require('../models/user');
 
 passport.use(new localStrategy({
         usernameField: 'email',
@@ -23,7 +23,7 @@ passport.use(new localStrategy({
             logService.error('authenticationController.local()');
             return done(errors);
         } else {
-            usersModel.findByEmail(email)
+            userModel.findByEmail(email)
                 .then(function(user){
                     if (!user || !utilService.nullCheck(user,'passwordSalt') || !utilService.nullCheck(user,'hashedPassword')){
                         logService.error('authenticationController.local() Invalid credentials');
@@ -53,7 +53,7 @@ passport.use(new bearerStrategy(
                     logService.error(error);
                     return done(null, false);
                 } else {
-                    usersModel.findByEmail(session.email)
+                    userModel.findByEmail(session.email)
                         .then(function(user) {
                             if (!user) {
                                 return done(null, false);

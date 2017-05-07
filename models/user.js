@@ -4,7 +4,7 @@ const //packages
     mysqlService = require('../services/mysql'),
     authenticationService = require('../services/authentication');
 
-let usersModel = {};
+let userModel = {};
 
 function getUserObject(result){
     return {
@@ -38,7 +38,7 @@ function findUser(whereParameters){
         });
 }
 
-usersModel.reduceUserObject = function(user){
+userModel.reduceUserObject = function(user){
     delete user.id;
     delete user.passwordSalt;
     delete user.hashedPassword;
@@ -46,23 +46,23 @@ usersModel.reduceUserObject = function(user){
     return user;
 };
 
-usersModel.findByEmail = function(email){
+userModel.findByEmail = function(email){
     if (!email || email.length < 1) {
-        return promise.reject(new Error('usersModel.findByEmail() No email specified'));
+        return promise.reject(new Error('userModel.findByEmail() No email specified'));
     } else {
         return findUser({email: email});
     }
 };
 
-usersModel.findByToken = function(token){
+userModel.findByToken = function(token){
     if (!token || token.length < 1) {
-        return promise.reject(new Error('usersModel.findByToken() No token specified'));
+        return promise.reject(new Error('userModel.findByToken() No token specified'));
     } else {
         return findUser({reset_token: token});
     }
 };
 
-usersModel.setResetToken = function(email,token){
+userModel.setResetToken = function(email,token){
     return mysqlService('users')
         .where('email', '=', email)
         .update({
@@ -71,7 +71,7 @@ usersModel.setResetToken = function(email,token){
         .limit(1);
 };
 
-usersModel.setPassword = function(user, password){
+userModel.setPassword = function(user, password){
     return mysqlService('users')
         .where('email', '=', user.email)
         .update({
@@ -80,4 +80,4 @@ usersModel.setPassword = function(user, password){
         });
 };
 
-module.exports = usersModel;
+module.exports = userModel;

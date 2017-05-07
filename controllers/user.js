@@ -5,11 +5,11 @@ const //packages
     utilService = require('../services/util'),
     emailService = require('../services/email'),
     authenticationService = require('../services/authentication'),
-    errorService = require('../services/errors'),
+    errorService = require('../services/error'),
 //models
-    usersModel = require('../models/users');
+    userModel = require('../models/user');
 
-let usersController = {};
+let userController = {};
 
 function createToken(user) {
     const payloadObject = {
@@ -19,17 +19,17 @@ function createToken(user) {
     return jwt.sign(payloadObject, process.env.SESSION_SECRET, { expiresIn: process.env.SESSION_EXPIRY });
 }
 
-usersController.submitLogin = function(req, res, next) {
+userController.submitLogin = function(req, res, next) {
     res.status(utilService.status.ok).json({sessionToken: createToken(req.user)});
 };
 
-usersController.getCurrentUser = function(req,res,next){
-    usersModel.findByEmail(req.user.email)
+userController.getCurrentUser = function(req,res,next){
+    userModel.findByEmail(req.user.email)
         .then(function(user){
             if (!user){
                 return promise.reject(new errorService.NotFoundError('Could not retrieve user'));
             } else {
-                user = usersModel.reduceUserObject(user);
+                user = userModel.reduceUserObject(user);
                 res.status(utilService.status.ok).json(user);
             }
         })
@@ -38,7 +38,7 @@ usersController.getCurrentUser = function(req,res,next){
         });
 };
 
-usersController.requestResetPasswordToken = function(req,res,next){
+userController.requestResetPasswordToken = function(req,res,next){
     req.checkBody('email', 'Email is invalid').isEmail();
     const errors = req.validationErrors();
     if(errors){
@@ -53,7 +53,7 @@ usersController.requestResetPasswordToken = function(req,res,next){
             };
         emailService.sendMail(data)
             .then(function(){
-                return usersModel.setResetToken(userEmail,token);
+                return userModel.setResetToken(userEmail,token);
             })
             .then(function() {
                 res.status(utilService.status.ok).send('A password reset link has been sent to your email');
@@ -64,7 +64,7 @@ usersController.requestResetPasswordToken = function(req,res,next){
     }
 };
 
-usersController.submitPasswordReset = function(req,res,next){
+userController.submitPasswordReset = function(req,res,next){
     req.checkBody('token', 'A token is required').notEmpty();
     req.checkBody('password', 'A password is required').notEmpty();
     const errors = req.validationErrors();
@@ -73,12 +73,12 @@ usersController.submitPasswordReset = function(req,res,next){
     } else {
         const userPassword = req.body.password,
             resetToken = req.body.token;
-        usersModel.findByToken(resetToken)
+        userModel.findByToken(resetToken)
             .then(function(user){
                 if (!user){
                     return promise.reject(new errorService.UnauthorizedError('Invalid token'));
                 } else {
-                    return usersModel.setPassword(user, userPassword);
+                    return userModel.setPassword(user, userPassword);
                 }
             })
             .then(function(){
@@ -90,4 +90,4 @@ usersController.submitPasswordReset = function(req,res,next){
     }
 };
 
-module.exports = usersController;
+module.exports = userController;

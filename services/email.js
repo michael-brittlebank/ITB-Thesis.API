@@ -2,7 +2,7 @@ const //packages
     promise = require('bluebird'),
     mailgun = promise.promisifyAll(require('mailgun-js')({apiKey: process.env.EMAIL_API_KEY, domain: process.env.EMAIL_DOMAIN})),
 //services
-    logService = require('./logs'),
+    logService = require('./log'),
     utilService = require('./util');
 
 let emailService = {};

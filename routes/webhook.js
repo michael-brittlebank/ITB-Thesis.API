@@ -4,12 +4,12 @@ const // packages
     //middleware
     authenticationMiddleware = require('../middleware/authentication'),
 //controllers
-    webhooksController = require('../controllers/webhooks');
+    webhookController = require('../controllers/webhook');
 
 router.route('/mailgun/*')
     .post(authenticationMiddleware.validateEmailWebhook);
 
 router.route('/mailgun/catchall')
-    .post(webhooksController.mailgunCatchAll);
+    .post(webhookController.mailgunCatchAll);
 
 module.exports = router;

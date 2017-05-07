@@ -12,12 +12,12 @@ const //packages
     passport = require('passport'),
     cookieParser = require('cookie-parser'),
 //services
-    logService = require('./services/logs'),
-    errorService = require('./services/errors'),
+    logService = require('./services/log'),
+    errorService = require('./services/error'),
     utilService = require('./services/util'),
 // routes
-    usersRoutes = require('./routes/users'),
-    webhooksRoutes = require('./routes/webhooks'),
+    userRoutes = require('./routes/user'),
+    webhookRoutes = require('./routes/webhook'),
 //middleware
     utilMiddleware = require('./middleware/util'),
 //variables
@@ -67,8 +67,8 @@ app.use(passport.initialize());
 /**
  * routes
  */
-app.use('/users', usersRoutes);
-app.use('/webhooks', webhooksRoutes);
+app.use('/user', userRoutes);
+app.use('/webhook', webhookRoutes);
 
 
 /**

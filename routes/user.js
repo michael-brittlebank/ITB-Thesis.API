@@ -3,21 +3,21 @@ const // packages
     router = express.Router(),
     authenticationMiddleware = require('../middleware/authentication'),
 //controllers
-    usersController = require('../controllers/users');
+    userController = require('../controllers/user');
 
 router.route('/login')
     .post(authenticationMiddleware.authenticateLogin,
-        usersController.submitLogin);
+        userController.submitLogin);
 
 router.route('/forgot-password')
-    .post(usersController.requestResetPasswordToken);
+    .post(userController.requestResetPasswordToken);
 
 router.route('/reset-password')
-    .put(usersController.submitPasswordReset);
+    .post(userController.submitPasswordReset);
 
 router.route('/me')
     .get(authenticationMiddleware.authenticateBearer,
-        usersController.getCurrentUser);
+        userController.getCurrentUser);
 
 // todo
 // router.route('/me/workouts')

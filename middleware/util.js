@@ -1,7 +1,7 @@
 const //packages
     path = require('path'),
 //services
-    logService = require('../services/logs'),
+    logService = require('../services/log'),
     utilService = require('../services/util');
 
 let utilMiddleware = {};

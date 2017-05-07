@@ -1,7 +1,7 @@
 const //packages
     mailgun = require('mailgun-js')({apiKey: process.env.EMAIL_API_KEY, domain: process.env.EMAIL_DOMAIN}),
     //services
-    logService = require('../services/logs'),
+    logService = require('../services/log'),
     //controllers
     authenticationController = require('../controllers/authentication');
 

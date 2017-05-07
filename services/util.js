@@ -1,4 +1,4 @@
-var util = {};
+let util = {};
 
 util.status = {
     ok: 200,
