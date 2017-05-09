@@ -9,7 +9,7 @@ let userModel = {};
 function getUserObject(result){
     return {
         id: result.id,
-        role: result.role,
+        role: result.role.toUpperCase(),
         firstName: result.first_name,
         lastName: result.last_name,
         email: result.email,
