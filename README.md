@@ -47,7 +47,7 @@ The site is served at [http://localhost:3001](http://localhost:3001)
 ## How to export changes to the database structure ##
 Install [this tool](https://github.com/luissquall/dbdump) and then run: 
 ```
-dbdump -u userName -p -d tableName > normalized-thesis-struct.sql
+dbdump -u userName -p -d tableName > normalized-db-structure.sql
 ```
 
 

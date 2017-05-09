@@ -14,7 +14,7 @@ function getUserObject(result){
         lastName: result.last_name,
         email: result.email,
         dateCreated: result.date_created,
-        lastLogin: result.last_login,
+        lastModified: result.last_modified,
         passwordSalt: result.password_salt,
         hashedPassword: result.hashed_password,
         resetToken: result.reset_token
