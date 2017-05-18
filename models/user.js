@@ -106,4 +106,27 @@ userModel.createUser = function(firstName, lastName, email, password){
         });
 };
 
+userModel.updateUser = function(user, firstName, lastName, password){
+    let updateObject = {
+        first_name: firstName,
+        last_name: lastName
+    };
+    if(password.length > 0){
+        updateObject.hashed_password = authenticationService.encryptPassword(user.passwordSalt,password)
+    }
+    return mysqlService('users')
+        .update(updateObject)
+        .where({
+            email: user.email
+        })
+        .limit(1)
+        .then(function (result){
+            if (result || result === 0) {
+                return result;
+            } else {
+                return promise.reject(new Error('userModel.updateUser() Could not update user'));
+            }
+        });
+};
+
 module.exports = userModel;

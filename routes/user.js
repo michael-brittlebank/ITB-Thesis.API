@@ -8,9 +8,13 @@ const // packages
 router.route('/')
     .get(authenticationMiddleware.authenticateBearer,
         userController.getCurrentUser)
-    .post(authenticationMiddleware.authenticateLogin,
-        userController.submitLogin)
+    .post(authenticationMiddleware.authenticateBearer,
+        userController.submitUpdate)
     .put(userController.submitRegister);
+
+router.route('/login')
+    .post(authenticationMiddleware.authenticateLogin,
+        userController.submitLogin);
 
 router.route('/forgot-password')
     .post(userController.requestResetPasswordToken);

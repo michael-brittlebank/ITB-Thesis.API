@@ -66,6 +66,7 @@ userController.requestResetPasswordToken = function(req,res,next){
 };
 
 userController.submitPasswordReset = function(req,res,next){
+    //todo, add password validation
     req.checkBody('token', 'A token is required').notEmpty();
     req.checkBody('password', 'A password is required').notEmpty();
     const errors = req.validationErrors();
@@ -92,6 +93,7 @@ userController.submitPasswordReset = function(req,res,next){
 };
 
 userController.submitRegister = function(req, res, next) {
+    //todo, add password validation
     req.checkBody('email', 'An email is required').notEmpty().isEmail();
     req.checkBody('password', 'A password is required').notEmpty();
     req.checkBody('firstName', 'First name required').notEmpty();
@@ -117,6 +119,27 @@ userController.submitRegister = function(req, res, next) {
             })
             .catch(function(error){
                 logService.error('userController.submitRegister()',error);
+                return next(error);
+            });
+
+    }
+};
+
+userController.submitUpdate = function(req, res, next) {
+    //todo, add password validation
+    req.checkBody('password', 'A password is required');
+    req.checkBody('firstName', 'First name required').notEmpty();
+    req.checkBody('lastName', 'Last name required').notEmpty();
+    const errors = req.validationErrors();
+    if(errors){
+        next(errors);
+    } else {
+        userModel.updateUser(req.user, req.body.firstName, req.body.lastName, req.body.password)
+            .then(function(){
+                return userController.getCurrentUser(req,res,next);
+            })
+            .catch(function(error){
+                logService.error('userController.submitUpdate()',error);
                 return next(error);
             });
 
