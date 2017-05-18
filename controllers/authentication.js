@@ -17,7 +17,7 @@ passport.use(new localStrategy({
     },
     function (req, email, password, done) {
         req.checkBody('password', 'Password not provided').notEmpty();
-        req.checkBody('email', 'Email is invalid').isEmail();
+        req.checkBody('email', 'Email is invalid').notEmpty().isEmail();
         const errors = req.validationErrors();
         if(errors){
             logService.error('authenticationController.local()');
@@ -25,7 +25,7 @@ passport.use(new localStrategy({
         } else {
             userModel.findByEmail(email)
                 .then(function(user){
-                    if (!user || !utilService.nullCheck(user,'passwordSalt') || !utilService.nullCheck(user,'hashedPassword')){
+                    if (!userModel.doesUserExist(user)){
                         logService.error('authenticationController.local() Invalid credentials');
                         return done(null, false, { message: 'passport.local() Invalid credentials' });
                     } else {

@@ -6,6 +6,7 @@ const //packages
     emailService = require('../services/email'),
     authenticationService = require('../services/authentication'),
     errorService = require('../services/error'),
+    logService = require('../services/log'),
 //models
     userModel = require('../models/user');
 
@@ -39,7 +40,7 @@ userController.getCurrentUser = function(req,res,next){
 };
 
 userController.requestResetPasswordToken = function(req,res,next){
-    req.checkBody('email', 'Email is invalid').isEmail();
+    req.checkBody('email', 'Email is invalid').notEmpty().isEmail();
     const errors = req.validationErrors();
     if(errors){
         next(errors);
@@ -87,6 +88,38 @@ userController.submitPasswordReset = function(req,res,next){
             .catch(function(error){
                 next(error);
             });
+    }
+};
+
+userController.submitRegister = function(req, res, next) {
+    req.checkBody('email', 'An email is required').notEmpty().isEmail();
+    req.checkBody('password', 'A password is required').notEmpty();
+    req.checkBody('firstName', 'First name required').notEmpty();
+    req.checkBody('lastName', 'Last name required').notEmpty();
+    const errors = req.validationErrors();
+    if(errors){
+        next(errors);
+    } else {
+        userModel.findByEmail(req.body.email)
+            .then(function(user){
+                //check if user account already exists
+                if (userModel.doesUserExist(user)){
+                    //user email already taken
+                    return promise.reject(new errorService.BadRequestError('User already exists'));
+                }
+            })
+            .then(function(){
+                //add new account
+                return userModel.createUser(req.body.firstName,req.body.lastName,req.body.email,req.body.password)
+                    .then(function(user){
+                        res.status(utilService.status.ok).json({sessionToken: createToken(user)});
+                    });
+            })
+            .catch(function(error){
+                logService.error('userController.submitRegister()',error);
+                return next(error);
+            });
+
     }
 };
 

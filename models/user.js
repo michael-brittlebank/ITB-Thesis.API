@@ -2,11 +2,12 @@ const //packages
     promise = require('bluebird'),
 //services
     mysqlService = require('../services/mysql'),
-    authenticationService = require('../services/authentication');
+    authenticationService = require('../services/authentication'),
+    utilService = require('../services/util');
 
 let userModel = {};
 
-function getUserObject(result){
+function mapToSchema(result){
     return {
         id: result.id,
         role: result.role.toUpperCase(),
@@ -31,7 +32,7 @@ function findUser(whereParameters){
         .then(function (result){
             result = result[0];
             if (result) {
-                return getUserObject(result);
+                return mapToSchema(result);
             } else {
                 return result;
             }
@@ -77,6 +78,31 @@ userModel.setPassword = function(user, password){
         .update({
             hashed_password: authenticationService.encryptPassword(user.passwordSalt, password),
             reset_token: null
+        });
+};
+
+userModel.doesUserExist = function(user){
+    return !!user && utilService.isValueNotNull(user,'passwordSalt') && utilService.isValueNotNull(user,'hashedPassword')
+};
+
+userModel.createUser = function(firstName, lastName, email, password){
+    let passwordSalt = authenticationService.createSalt(),
+        hashedPassword = authenticationService.encryptPassword(passwordSalt,password);
+    return mysqlService('users')
+        .insert({
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            password_salt: passwordSalt,
+            hashed_password: hashedPassword
+        })
+        .then(function (result){
+            result = result[0];
+            if (result) {
+                return findUser({email: email});
+            } else {
+                return promise.reject(new Error('userModel.createUser() Could not create user'));
+            }
         });
 };
 

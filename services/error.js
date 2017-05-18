@@ -33,4 +33,13 @@ UnauthorizedError.prototype = Object.create(Error.prototype);
 UnauthorizedError.prototype.constructor = UnauthorizedError;
 errors.UnauthorizedError = UnauthorizedError;
 
+let BadRequestError = function(message) {
+    this.name = 'BadRequestError';
+    this.message = message || 'Bad Request Error';
+    this.status = utilService.status.badRequest;
+};
+BadRequestError.prototype = Object.create(Error.prototype);
+BadRequestError.prototype.constructor = BadRequestError;
+errors.BadRequestError = BadRequestError;
+
 module.exports = errors;

@@ -8,10 +8,10 @@ const //packages
 let emailService = {};
 
 emailService.sendMail = function(data) {
-    if (!utilService.nullCheck(data, 'from')){
+    if (!utilService.isValueNotNull(data, 'from')){
         data.from = process.env.EMAIL_SENDER;
     }
-    if (utilService.nullCheck(data,'to') && utilService.nullCheck(data,'subject') && utilService.nullCheck(data,'text')){//todo, && utilService.nullCheck(data,'html')){
+    if (utilService.isValueNotNull(data,'to') && utilService.isValueNotNull(data,'subject') && utilService.isValueNotNull(data,'text')){//todo, && utilService.isValueNotNull(data,'html')){
         return mailgun.messages().send(data)
             .then(function (response) {
                 return promise.resolve();

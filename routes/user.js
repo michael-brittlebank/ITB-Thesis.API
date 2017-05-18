@@ -5,24 +5,17 @@ const // packages
 //controllers
     userController = require('../controllers/user');
 
-router.route('/login')
+router.route('/')
+    .get(authenticationMiddleware.authenticateBearer,
+        userController.getCurrentUser)
     .post(authenticationMiddleware.authenticateLogin,
-        userController.submitLogin);
+        userController.submitLogin)
+    .put(userController.submitRegister);
 
 router.route('/forgot-password')
     .post(userController.requestResetPasswordToken);
 
 router.route('/reset-password')
     .post(userController.submitPasswordReset);
-
-router.route('/me')
-    .get(authenticationMiddleware.authenticateBearer,
-        userController.getCurrentUser);
-
-// todo
-// router.route('/me/workouts')
-//     .get(authenticationMiddleware.authenticateBearer,)
-//     .put(authenticationMiddleware.authenticateBearer,)
-//     .post(authenticationMiddleware.authenticateBearer,);
 
 module.exports = router;
