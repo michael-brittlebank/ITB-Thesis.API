@@ -129,4 +129,8 @@ userModel.updateUser = function(user, firstName, lastName, password){
         });
 };
 
+userModel.isUserAdmin = function(user){
+  return !!user && user.role === 'ADMIN';
+};
+
 module.exports = userModel;

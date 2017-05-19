@@ -18,8 +18,10 @@ const //packages
 // routes
     userRoutes = require('./routes/user'),
     webhookRoutes = require('./routes/webhook'),
+    adminRoutes = require('./routes/admin'),
 //middleware
     utilMiddleware = require('./middleware/util'),
+    authenticationMiddleware = require('./middleware/authentication'),
 //variables
     port = process.env.NODE_PORT || 3001;
 
@@ -67,6 +69,7 @@ app.use(passport.initialize());
 /**
  * routes
  */
+app.use('/admin', authenticationMiddleware.authenticateBearer, authenticationMiddleware.isAdmin, adminRoutes);
 app.use('/user', userRoutes);
 app.use('/webhook', webhookRoutes);
 
