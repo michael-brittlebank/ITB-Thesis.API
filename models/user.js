@@ -1,6 +1,7 @@
 const //packages
     promise = require('bluebird'),
-//services
+    _ = require('lodash'),
+    //services
     mysqlService = require('../services/mysql'),
     authenticationService = require('../services/authentication'),
     utilService = require('../services/util');
@@ -131,6 +132,24 @@ userModel.updateUser = function(user, firstName, lastName, password){
 
 userModel.isUserAdmin = function(user){
   return !!user && user.role === 'ADMIN';
+};
+
+userModel.getUsers = function(page, limit){
+    page--; //0 indexing
+    let offset = page*limit;
+    return mysqlService
+        .select('users.*', 'user_roles.name AS role')
+        .from('users')
+        .join('user_roles','users.role_id', '=', 'user_roles.id')
+        .offset(offset)
+        .limit(limit)
+        .then(function (result){
+            if (result) {
+                return _.map(result, mapToSchema);
+            } else {
+                return result;
+            }
+        });
 };
 
 module.exports = userModel;
