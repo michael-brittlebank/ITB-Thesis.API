@@ -8,6 +8,32 @@ const //packages
 
 let userModel = {};
 
+/**
+ * @swagger
+ * definition:
+ *   User:
+ *     properties:
+ *       id:
+ *         type: integer
+ *       role:
+ *         type: string
+ *       firstName:
+ *         type: string
+ *       lastName:
+ *         type: string
+ *       email:
+ *         type: string
+ *       dateCreated:
+ *         type: timestamp
+ *       lastModified:
+ *         type: timestamp
+ *       passwordSalt:
+ *         type: string
+ *       hashedPassword:
+ *         type: string
+ *       resetToken:
+ *         type: string
+ */
 function mapToSchema(result){
     return {
         id: result.id,

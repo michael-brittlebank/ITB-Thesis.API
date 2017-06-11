@@ -11,6 +11,8 @@ const //packages
     moment = require('moment'),
     passport = require('passport'),
     cookieParser = require('cookie-parser'),
+    swaggerJSDoc = require('swagger-jsdoc'),
+    swaggerUi = require('swagger-ui-express'),
 //services
     logService = require('./services/log'),
     errorService = require('./services/error'),
@@ -26,6 +28,49 @@ const //packages
     port = process.env.NODE_PORT || 3001;
 
 let app = express();
+
+
+/**
+ * documentation
+ */
+if(utilService.isLocalConfig()){
+    // initialize swagger-jsdoc
+    const swaggerSpec = swaggerJSDoc({
+        // import swaggerDefinitions
+        swaggerDefinition: {
+            info: {
+                title: 'Thesis API',
+                version: '1.0.0',
+                description: 'RESTful API',
+            },
+            produces: ['application/json'],
+            consumes: ['application/json'],
+            host: 'localhost:3001',
+            basePath: '/',
+            securityDefinitions: {
+                jwt: {
+                    type: 'apiKey',
+                    name: 'Authorization',
+                    in: 'header'
+                }
+            },
+            security: [
+                { jwt: [] }
+            ]
+        },
+        // path to the API docs
+        apis: ['./models/*.js','./routes/*.js']
+    });
+    let showExplorer = true;
+
+    //serve swagger
+    app.get('/swagger.json', function(req, res) {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(swaggerSpec);
+    });
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, showExplorer));
+}
+
 
 /**
  * settings
