@@ -8,7 +8,8 @@
     "stop": "foreman stop -f Procfile",
     "dev": "foreman start -f Procfile_dev",
     "export": "sudo nf export -o /etc/init",
-    "lint": "jshint --exclude node_modules ."
+    "lint": "jshint --exclude node_modules .",
+    "test": "mocha tests/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -52,8 +53,13 @@
     "request": "2.78.0",
     "request-promise": "4.1.1",
     "striptags": "2.0.4",
-    "swagger-jsdoc": "1.9.4",
-    "swagger-ui-express": "2.0.0",
     "winston": "2.3.1"
+  },
+  "devDependencies": {
+    "chai": "4.0.2",
+    "mocha": "3.4.2",
+    "sinon": "2.3.4",
+    "swagger-jsdoc": "1.9.4",
+    "swagger-ui-express": "2.0.0"
   }
 }
