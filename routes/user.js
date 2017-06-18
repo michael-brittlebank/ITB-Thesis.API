@@ -9,12 +9,14 @@ router.route('/')
     .get(authenticationMiddleware.authenticateBearer,
         userController.getCurrentUser)
     .post(authenticationMiddleware.authenticateBearer,
-        userController.submitUpdate)
-    .put(userController.submitRegister);
+        userController.updateCurrentUser);
 
 router.route('/login')
     .post(authenticationMiddleware.authenticateLogin,
         userController.submitLogin);
+
+router.route('/register')
+    .put(userController.submitRegister);
 
 router.route('/forgot-password')
     .post(userController.requestResetPasswordToken);

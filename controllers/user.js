@@ -125,7 +125,7 @@ userController.submitRegister = function(req, res, next) {
     }
 };
 
-userController.submitUpdate = function(req, res, next) {
+userController.updateCurrentUser = function(req, res, next) {
     //todo, add password validation
     req.checkBody('password', 'A password is required');
     req.checkBody('firstName', 'First name required').notEmpty();
@@ -139,7 +139,7 @@ userController.submitUpdate = function(req, res, next) {
                 return userController.getCurrentUser(req,res,next);
             })
             .catch(function(error){
-                logService.error('userController.submitUpdate()',error);
+                logService.error('userController.updateCurrentUser()',error);
                 return next(error);
             });
 

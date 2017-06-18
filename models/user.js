@@ -67,7 +67,6 @@ function findUser(whereParameters){
 }
 
 userModel.reduceUserObject = function(user){
-    delete user.id;
     delete user.passwordSalt;
     delete user.hashedPassword;
     delete user.resetToken;
@@ -144,7 +143,7 @@ userModel.updateUser = function(user, firstName, lastName, password){
     return mysqlService('users')
         .update(updateObject)
         .where({
-            email: user.email
+            id: user.id
         })
         .limit(1)
         .then(function (result){
@@ -174,6 +173,23 @@ userModel.getUsers = function(page, limit){
                 return _.map(result, mapToSchema);
             } else {
                 return result;
+            }
+        });
+};
+
+userModel.deleteUserById = function(userId){
+    return mysqlService
+        .from('users')
+        .where({
+            id: parseInt(userId)
+        })
+        .limit(1)
+        .del()
+        .then(function (result){
+            if (result || result === 0) {
+                return result;
+            } else {
+                return promise.reject(new Error('userModel.deleteUserById() Could not delete user'));
             }
         });
 };
