@@ -24,7 +24,7 @@
 
 ## How to set up a local environment ##
 
-NPM and Bower install project dependencies (only needed once).  Grunt builds the frontend CSS and JS files
+NPM and Bower install project dependencies (only needed once).
 
 After cloning the repo:
 ```
