@@ -10,18 +10,23 @@ function mapToSchema(result){
     return {
         id: result.id,
         userId: result.user_id,
+        exercises: result.exercises,
         dateCreated: result.date_created
     };
 }
 
 workoutModel.getWorkoutsByUserId = function(userId){
     return mysqlService
-        .select('*')
+        .select('workouts.*', mysqlService.raw('COUNT(workout_exercises.workout_id) as exercises'))
         .from('workouts')
+        .leftOuterJoin('workout_exercises', 'workouts.id', 'workout_exercises.workout_id')
         .where({
-            user_id: userId
+            'workouts.user_id': userId
         })
+        .groupBy('workout_exercises.workout_id')
+        .orderBy('workouts.date_created','desc')
         .then(function (result){
+            console.log('results',result);
             if (result) {
                 return _.map(result, mapToSchema);
             } else {

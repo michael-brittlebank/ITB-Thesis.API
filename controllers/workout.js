@@ -30,7 +30,7 @@ workoutController.getCurrentUsersWorkouts = function(req, res, next) {
     if(errors){
         next(errors);
     } else {
-        workoutModel.getWorkouts(req.user.id)
+        workoutModel.getWorkoutsByUserId(req.user.id)
             .then(function(workouts){
                 res.status(utilService.status.ok).json(workouts);
             })
