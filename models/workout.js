@@ -28,7 +28,6 @@ workoutModel.getWorkoutsByUserId = function(userId){
         .groupBy('workout_exercises.workout_id')
         .orderBy('workouts.date_created','desc')
         .then(function (result){
-            console.log('results',result);
             if (result) {
                 return _.map(result, mapToSchema);
             } else {
@@ -115,12 +114,11 @@ workoutModel.getWorkoutById = function(userId, workoutId){
                 let workout = mapToSchema(result);
                 return exerciseModel.getExercisesByWorkoutId(workout.id)
                     .then(function(exercises){
-                        console.log('exercises',exercises);
                        workout.exercises = exercises;
                        return workout;
                     });
             } else {
-                return promise.reject(new Error('workoutModel.saveWorkoutExercise() Could not save workout exercise'));
+                return promise.reject(new Error('workoutModel.getWorkoutById() Could not get workout'));
             }
         });
 };

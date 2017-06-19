@@ -69,7 +69,7 @@ workoutController.getWorkout = function(req, res, next) {
                 res.status(utilService.status.ok).json(workout);
             })
             .catch(function(error){
-                logService.error('userController.saveWorkout()',error);
+                logService.error('userController.getWorkout()',error);
                 return next(error);
             });
     }
