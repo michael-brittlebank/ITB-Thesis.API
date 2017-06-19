@@ -4,7 +4,7 @@
 ## Description ##
 
 
-* This is the api component of my thesis
+* This is the api component of the thesis
 
 
 ## Software Architecture (High Level) ##
