@@ -20,7 +20,7 @@ CREATE TABLE `exercise_type` (
 
 CREATE TABLE `exercises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`),
@@ -35,8 +35,11 @@ CREATE TABLE `primary_muscle_groups` (
 
 CREATE TABLE `secondary_muscle_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `primary_muscle_group_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `primary_muscle_group_id` (`primary_muscle_group_id`),
+  CONSTRAINT `secondary_muscle_groups_ibfk_1` FOREIGN KEY (`primary_muscle_group_id`) REFERENCES `primary_muscle_groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user_roles` (
@@ -53,7 +56,7 @@ CREATE TABLE `users` (
   `password_salt` varchar(255) NOT NULL,
   `hashed_password` varchar(255) NOT NULL,
   `reset_token` varchar(255) DEFAULT NULL,
-  `role_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL DEFAULT '99',
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
