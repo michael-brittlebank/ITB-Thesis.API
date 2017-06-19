@@ -21,6 +21,7 @@ const //packages
     userRoutes = require('./routes/user'),
     webhookRoutes = require('./routes/webhook'),
     adminRoutes = require('./routes/admin'),
+    workoutRoutes = require('./routes/workout'),
 //middleware
     utilMiddleware = require('./middleware/util'),
     authenticationMiddleware = require('./middleware/authentication'),
@@ -115,6 +116,7 @@ app.use(passport.initialize());
  * routes
  */
 app.use('/admin', authenticationMiddleware.authenticateBearer, authenticationMiddleware.isAdmin, adminRoutes);
+app.use('/workouts', authenticationMiddleware.authenticateBearer, workoutRoutes);
 app.use('/user', userRoutes);
 app.use('/webhook', webhookRoutes);
 
