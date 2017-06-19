@@ -1,6 +1,8 @@
 const //packages
     _ = require('lodash'),
     promise = require('bluebird'),
+    //models
+    exerciseModel = require('./exercise'),
     //services
     mysqlService = require('../services/mysql');
 
@@ -98,6 +100,28 @@ workoutModel.saveWorkout = function(userId, exercises){
         })
         .catch(function(){
             return promise.reject(new Error('workoutModel.saveWorkout() Could not save workout'));
+        });
+};
+
+workoutModel.getWorkoutById = function(userId, workoutId){
+    return mysqlService('workouts')
+        .where({
+            user_id: userId,
+            id: workoutId
+        })
+        .then(function (result){
+            result = result[0];
+            if (result) {
+                let workout = mapToSchema(result);
+                return exerciseModel.getExercisesByWorkoutId(workout.id)
+                    .then(function(exercises){
+                        console.log('exercises',exercises);
+                       workout.exercises = exercises;
+                       return workout;
+                    });
+            } else {
+                return promise.reject(new Error('workoutModel.saveWorkoutExercise() Could not save workout exercise'));
+            }
         });
 };
 

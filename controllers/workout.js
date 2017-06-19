@@ -58,5 +58,22 @@ workoutController.saveWorkout = function(req, res, next) {
     }
 };
 
+workoutController.getWorkout = function(req, res, next) {
+    req.checkParams('workoutId', 'Workout id is required').notEmpty();
+    const errors = req.validationErrors();
+    if(errors){
+        next(errors);
+    } else {
+        workoutModel.getWorkoutById(req.user.id, req.params.workoutId)
+            .then(function(workout){
+                res.status(utilService.status.ok).json(workout);
+            })
+            .catch(function(error){
+                logService.error('userController.saveWorkout()',error);
+                return next(error);
+            });
+    }
+};
+
 
 module.exports = workoutController;

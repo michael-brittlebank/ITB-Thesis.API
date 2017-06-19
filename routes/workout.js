@@ -11,4 +11,7 @@ router.route('/')
 router.route('/exercises')
     .get(workoutController.getExercises);
 
+router.route('/:workoutId')
+    .get(workoutController.getWorkout);
+
 module.exports = router;
